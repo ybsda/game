@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Le Petit Explorateur - Jungle Adventure</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Setup -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="assets/relic.png">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui-layer">
+            <div id="score-container">
+                <img src="assets/relic.png" alt="Relique" class="score-icon">
+                <span id="score">0</span>
+            </div>
+        </div>
+
+        <div id="start-screen" class="overlay">
+            <h1>Le Petit Explorateur</h1>
+            <p>Aventure dans la Jungle</p>
+            <button id="start-button">COMMENCER</button>
+        </div>
+
+        <div id="game-over-screen" class="overlay hidden">
+            <h1>FIN DE PARTIE</h1>
+            <p>Score Final: <span id="final-score">0</span></p>
+            <button id="restart-button">RECOMMENCER</button>
+        </div>
+    </div>
+    <script src="game.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(err => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>

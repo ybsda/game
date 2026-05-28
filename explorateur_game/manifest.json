@@ -1,0 +1,22 @@
+{
+  "name": "Le Petit Explorateur",
+  "short_name": "Explorateur",
+  "description": "Jeu mobile d'aventure dans la jungle",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "assets/relic.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/relic.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
