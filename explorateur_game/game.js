@@ -206,6 +206,7 @@ function init() {
 
 function resizeCanvas() {
     const container = document.getElementById('game-container');
+    if (!container) return;
     canvas.width = container.clientWidth * 2; // High DPI
     canvas.height = container.clientHeight * 2;
     ctx.scale(2, 2);
@@ -213,6 +214,10 @@ function resizeCanvas() {
     // Adjust logic canvas size (not CSS size)
     canvas.logicWidth = container.clientWidth;
     canvas.logicHeight = container.clientHeight;
+    
+    if (!isGameRunning) {
+        draw();
+    }
 }
 
 function loadAssets() {
@@ -392,6 +397,8 @@ menuButton.addEventListener('touchstart', (e) => { e.preventDefault(); showMenu(
 window.addEventListener('resize', resizeCanvas);
 
 // Init
-loadAssets();
-init();
-setTimeout(draw, 500); // Initial draw for background
+window.addEventListener('load', () => {
+    loadAssets();
+    init();
+    setTimeout(draw, 100); // Initial draw for background
+});

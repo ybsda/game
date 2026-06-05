@@ -1,12 +1,13 @@
-const CACHE_NAME = 'explorateur-v1';
+const CACHE_NAME = 'explorateur-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './game.js',
   './manifest.json',
-  './assets/background.png',
+  './assets/arr.jpg',
   './assets/character.png',
+  './assets/chaimaa.png',
   './assets/platform.png',
   './assets/relic.png',
   './assets/run1.png',
