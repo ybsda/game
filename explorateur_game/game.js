@@ -307,7 +307,9 @@ function draw() {
     
     platforms.forEach(p => p.draw());
     relics.forEach(r => r.draw());
-    player.draw();
+    if (player) {
+        player.draw();
+    }
 }
 
 function startGame() {
