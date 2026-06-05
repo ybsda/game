@@ -11,6 +11,7 @@ const gameOverScreen = document.getElementById('game-over-screen');
 const finalScoreElement = document.getElementById('final-score');
 const startButton = document.getElementById('start-button');
 const restartButton = document.getElementById('restart-button');
+const menuButton = document.getElementById('menu-button');
 
 // Game constants
 const GRAVITY = 0.6;
@@ -21,9 +22,10 @@ const PLAYER_X = 80;
 // Assets
 const images = {};
 const assetSources = {
-    character: 'assets/character.png',
-    run1: 'assets/run1.png',
-    run2: 'assets/run2.png',
+    hanaa: 'assets/character.png',
+    hanaaRun1: 'assets/run1.png',
+    hanaaRun2: 'assets/run2.png',
+    chaimaa: 'assets/chaimaa.png',
     background: 'assets/arr.jpg',
     platform: 'assets/platform.png',
     relic: 'assets/relic.png',
@@ -31,6 +33,9 @@ const assetSources = {
     jumpSound: 'assets/sauter.mp3',
     gameOverSound: 'assets/super.mp3'
 };
+
+// Character selection state
+let selectedCharacter = 'hanaa';
 
 // Game state
 let isGameRunning = false;
@@ -104,11 +109,27 @@ class Player {
 
     draw() {
         ctx.save();
-        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
         
-        let img = images.character;
-        if (!this.isJumping) {
-            img = this.animFrame === 0 ? images.run1 : images.run2;
+        let offsetY = 0;
+        let img;
+        
+        if (selectedCharacter === 'hanaa') {
+            img = images.hanaa;
+            if (!this.isJumping) {
+                img = this.animFrame === 0 ? images.hanaaRun1 : images.hanaaRun2;
+            }
+        } else {
+            img = images.chaimaa;
+            // Bobbing effect when running to simulate animation
+            if (!this.isJumping) {
+                offsetY = this.animFrame === 0 ? 0 : 4;
+            }
+        }
+        
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2 + offsetY);
+        
+        if (this.isJumping) {
+            ctx.rotate(this.rotation);
         }
         
         ctx.drawImage(img, -this.width / 2, -this.height / 2, this.width, this.height);
@@ -318,16 +339,20 @@ function handleAction() {
 }
 
 window.addEventListener('touchstart', (e) => {
-    if (e.target.tagName !== 'BUTTON') {
+    if (e.target.tagName === 'BUTTON' || e.target.closest('.character-card')) {
+        return;
+    }
+    if (isGameRunning) {
         e.preventDefault();
     }
     handleAction();
 }, { passive: false });
 
 window.addEventListener('mousedown', (e) => {
-    if (e.target.tagName !== 'BUTTON') {
-        handleAction();
+    if (e.target.tagName === 'BUTTON' || e.target.closest('.character-card')) {
+        return;
     }
+    handleAction();
 });
 
 window.addEventListener('keydown', (e) => {
@@ -338,6 +363,31 @@ startButton.addEventListener('click', startGame);
 startButton.addEventListener('touchstart', (e) => { e.preventDefault(); startGame(); }, { passive: false });
 restartButton.addEventListener('click', startGame);
 restartButton.addEventListener('touchstart', (e) => { e.preventDefault(); startGame(); }, { passive: false });
+
+// Character selection cards interactivity
+const cards = document.querySelectorAll('.character-card');
+cards.forEach(card => {
+    const selectHandler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedCharacter = card.getAttribute('data-char');
+    };
+    
+    card.addEventListener('click', selectHandler);
+    card.addEventListener('touchstart', selectHandler, { passive: false });
+});
+
+// Menu button interactivity
+function showMenu() {
+    gameOverScreen.classList.add('hidden');
+    startScreen.classList.remove('hidden');
+}
+
+menuButton.addEventListener('click', showMenu);
+menuButton.addEventListener('touchstart', (e) => { e.preventDefault(); showMenu(); }, { passive: false });
 
 window.addEventListener('resize', resizeCanvas);
 

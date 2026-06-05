@@ -25,14 +25,38 @@
 
         <div id="start-screen" class="overlay">
             <h1>Le Petit Explorateur</h1>
-            <p>Aventure dans la Jungle</p>
+            <p class="subtitle">Aventure dans la Jungle</p>
+            
+            <div class="character-selection-title">CHOISIS TON AVENTURIER</div>
+            <div class="character-container">
+                <div class="character-card active" id="card-hanaa" data-char="hanaa">
+                    <div class="card-glow"></div>
+                    <div class="char-img-container">
+                        <img src="assets/character.png" alt="Hanaa">
+                    </div>
+                    <h3>Hanaa</h3>
+                    <p class="char-desc">L'exploratrice agile</p>
+                </div>
+                <div class="character-card" id="card-chaimaa" data-char="chaimaa">
+                    <div class="card-glow"></div>
+                    <div class="char-img-container">
+                        <img src="assets/chaimaa.png" alt="Chaimaa">
+                    </div>
+                    <h3>Chaimaa</h3>
+                    <p class="char-desc">La chercheuse intrépide</p>
+                </div>
+            </div>
+            
             <button id="start-button">COMMENCER</button>
         </div>
 
         <div id="game-over-screen" class="overlay hidden">
             <h1>FIN DE PARTIE</h1>
             <p>Score Final: <span id="final-score">0</span></p>
-            <button id="restart-button">RECOMMENCER</button>
+            <div class="game-over-buttons">
+                <button id="restart-button">RECOMMENCER</button>
+                <button id="menu-button" class="btn-secondary">PERSONNAGE</button>
+            </div>
         </div>
     </div>
     <script src="game.js"></script>
